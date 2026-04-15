@@ -4,8 +4,8 @@ Xavier Généreux, Johannes Hölzl, and Jannis Limperg. See `LICENSE.txt`. -/
 import Aesop
 import Mathlib.Algebra.Field.Defs
 import Mathlib.Algebra.Order.Ring.Abs
-import Mathlib.Algebra.BigOperators.Group.List
-import Mathlib.Algebra.BigOperators.Group.Multiset
+import Mathlib.Algebra.BigOperators.Group.List.Basic
+import Mathlib.Algebra.BigOperators.Group.Multiset.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Tree.Basic
 import Mathlib.Tactic.Linarith
@@ -141,38 +141,13 @@ theorem Nat.two_mul (n : ℕ) :
   by rfl
 
 instance Set.PartialOrder {α : Type} : PartialOrder (Set α) :=
-  { le               := fun A B ↦ A ⊆ B,
-    lt               := fun A B ↦ A ⊆ B ∧ A ≠ B,
-    le_refl          :=
-      by
-        intro A a ha
-        assumption
-    le_trans         :=
-      by
-        intro A B C hAB hBC a ha
-        aesop,
-    lt_iff_le_not_le :=
-      by
-        intro A B
-        apply Iff.intro
-        { intro hAB
-          simp [LT.lt, LE.le] at *
-          cases hAB with
-          | intro hsseq hneq =>
-            apply And.intro
-            { assumption }
-            { intro hflip
-              apply hneq
-              apply Set.ext
-              aesop } }
-        { intro hAB
-          simp [LT.lt, LE.le] at *
-          aesop },
-    le_antisymm      :=
-      by
-        intro A B hAB hBA
-        apply Set.ext
-        aesop }
+  { le               := fun A B ↦ A ⊆ B
+    lt               := fun A B ↦ A ⊆ B ∧ A ≠ B
+    le_refl          := by grind
+    le_trans         := by grind
+    lt_iff_le_not_ge := by grind
+    le_antisymm      := by grind
+  }
 
 @[simp] theorem Set.le_def {α : Type} (A B : Set α) :
     A ≤ B ↔ A ⊆ B :=

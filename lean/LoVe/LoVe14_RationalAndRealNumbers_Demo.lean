@@ -54,8 +54,8 @@ instance Setoid : Setoid Fraction :=
   { r :=
       fun a b : Fraction ↦ num a * denom b = num b * denom a
     iseqv :=
-      { refl  := by aesop
-        symm  := by aesop
+      { refl  := by grind only
+        symm  := by grind only
         trans :=
           by
             intro a b c heq_ab heq_bc
@@ -469,7 +469,7 @@ theorem Setoid_add {f f' g g' : CauchySeq} (hf : f ≈ f')
               rw [arg_eq]
           _ ≤ abs (seqOf f m - seqOf f' m)
               + abs (seqOf g m - seqOf g' m) :=
-            by apply abs_add
+            by grind
           _ < ε₀ / 2 + ε₀ / 2 :=
             add_lt_add (hNf m (le_of_max_le_left hm))
               (hNg m (le_of_max_le_right hm))
